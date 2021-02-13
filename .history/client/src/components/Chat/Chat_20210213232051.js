@@ -21,7 +21,11 @@ const Chat = ({ location }) => {
     setName(name);
     setRoom(room);
 
-    socket.emit("join", { name, room }, () => {});
+    socket.emit("join", { name, room }, () => {
+
+
+
+    });
 
     return () => {
       socket.emit("disconnect");
@@ -30,36 +34,22 @@ const Chat = ({ location }) => {
     };
   }, [ENDPOINT, location.search]);
 
-  useEffect(() => {
-    socket.on(
-      "message",
-      () => {
-        setMessages([...messages, message]);
-      },
-      [messages]
-    );
-  });
+useEffect(()=>{
+socket.on('message', () => {
+setMessages([...messages, message])
 
-  const sendMessage = (event) => {
-    if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
-    }
-  };
+},[messages])
 
-  return (
-    <div className="outerContainer">
-      <div className="container">
-        <input
-          value={message}
-          onChange={(event) => {
-            setMessage(event.target.value);
-          }}
-          onKeyPress={(event) => (event.key === "Enter" ? sendMessage(event) : null)}
-          type="text"
-        />
-      </div>
+
+})
+
+
+
+  return <div className="outerContainer">
+    <div className="container">
+      <input value ={message} onChange type="text"/>
     </div>
-  );
+  </div>
 };
 
 export default Chat;
