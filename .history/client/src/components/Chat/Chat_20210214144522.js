@@ -43,11 +43,10 @@ const Chat = ({ location }) => {
   });
 
   const sendMessage = (event) => {
-    event.preventDefault();
     if (message) {
       socket.emit("sendMessage", message, () => setMessage(""));
     }
-  }
+  };
 
   console.log(message, messages);
 
