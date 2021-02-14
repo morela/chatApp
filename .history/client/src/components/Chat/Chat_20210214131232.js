@@ -3,7 +3,7 @@ import queryString from "query-string";
 import io from "socket.io-client";
 
 import "./Chat.css";
-import InfoBar from "../InfoBar/InfoBar";
+import InfoBar from '../InfoBar/InfoBar';
 
 let socket;
 
