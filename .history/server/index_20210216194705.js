@@ -43,6 +43,3 @@ io.on("connection", (socket) => {
 app.use(router);
 
 server.listen(PORT, () => console.log(`Server has started on port  ${PORT}`));
-
-
-

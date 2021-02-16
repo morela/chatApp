@@ -16,12 +16,12 @@ const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState("");
  
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
 
-    socket = io(ENDPOINT, { transports: ["websocket", "polling", "flashsocket"] });
+    socket = io(ENDPOINT);
 
     setRoom(room);
     setName(name)
@@ -41,24 +41,24 @@ const Chat = ({ location }) => {
 }, []);
 
 
-const sendMessage = (event) => {
-  event.preventDefault();
+  const sendMessage = (event) => {
+    event.preventDefault();
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
+    }
+  };
 
-  if(message) {
-    socket.emit('sendMessage', message, () => setMessage(''));
-  }
-}
 
-return (
-  <div className="outerContainer">
-    <div className="container">
-        <InfoBar room={room} />
-        <Messages messages={messages} name={name} />
-        <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+  return (
+    <div className="outerContainer">
+      <div className="container">
+          <InfoBar room={room} />
+          <Messages messages={messages} name={name} />
+          <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
+      </div>
+ 
     </div>
-
-  </div>
-);
-}
+  );
+};
 
 export default Chat;
